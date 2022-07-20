@@ -154,45 +154,50 @@ app.whenReady().then(() => {
   console.log(`key:${key}`);
   let body = '';
   var postData = JSON.stringify({ "key": key });
-  const { net } = require('electron');
-  const request = net.request({
-    method: 'POST',
-    url: "http://localhost:8000/project/getUsers/",
-    headers: {
-      'Content-Type': 'application/json',
-    }
-  })
-  request.write(postData);
-  request.on('response', (response) => {
-    console.log(`STATUS: ${response.statusCode}`)
-    console.log(`HEADERS: ${JSON.stringify(response.headers)}`)
-    console.log(response.body)
-    response.on('data', (chunk) => {
-      console.log(`BODY: ${chunk}`)
-      body = JSON.parse(chunk.toString())
-      app.whenReady().then(() => {
-        if (body.message != "Activated") {
-          const NOTIFICATION_TITLE = 'Basic Notification'
-          const NOTIFICATION_BODY = body.message
+  try {
+    const { net } = require('electron');
+    const request = net.request({
+      method: 'POST',
+      url: "http://localhost:8000/project/getUsers/",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    request.write(postData);
+    request.on('response', (response) => {
+      console.log(`STATUS: ${response.statusCode}`)
+      console.log(`HEADERS: ${JSON.stringify(response.headers)}`)
+      console.log(response.body)
+      response.on('data', (chunk) => {
+        console.log(`BODY: ${chunk}`)
+        body = JSON.parse(chunk.toString())
+        app.whenReady().then(() => {
+          if (body.message != "Activated") {
+            const NOTIFICATION_TITLE = 'Basic Notification'
+            const NOTIFICATION_BODY = body.message
 
-          function showNotification() {
-            new Notification({ title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY }).show()
+            function showNotification() {
+              new Notification({ title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY }).show()
+            }
+            app.whenReady().then(showNotification).then(() => {
+              setTimeout(createWindow, 3000)
+              console.log(`version ${app.getVersion()}`);
+            });
+          } else {
+            createTray();
           }
-          app.whenReady().then(showNotification).then(() => {
-            setTimeout(createWindow, 3000)
-          });
-        } else {
-          createTray();
-        }
+        })
+        console.log(body.message);
       })
-      console.log(body.message);
+      response.on('end', () => {
+        console.log('No more data in response.')
+      })
     })
-    response.on('end', () => {
-      console.log('No more data in response.')
-    })
-  })
 
-  request.end()
+    request.end()
+  } catch (e) {
+    console.log(e)
+  }
 })
 
 
@@ -221,6 +226,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
+  console.log(`version${app.getVersion()}`);
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
