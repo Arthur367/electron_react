@@ -1,7 +1,9 @@
 import React, { Component, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { channels } from '../shared/constants';
 import { signMainUser } from '../axios';
 const getmac = window.require('getmac');
+const { ipcRenderer } = window.require('electron');
 
 export default function InputLicense() {
 
@@ -17,7 +19,9 @@ export default function InputLicense() {
       console.log(result.data);
       if (result.status === 200) {
         alert(result.data["message"]);
+        ipcRenderer.send(channels.GET_LICENSE, key)
         setKey("");
+        ipcRenderer.send(channels.GET_DATA, "Successfull");
       }
 
 

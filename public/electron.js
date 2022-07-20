@@ -1,12 +1,15 @@
 // ./public/electron.js
 
-const { app, BrowserWindow, Menu, Tray, nativeImage, ipcMain, } = require('electron');
+const { app, BrowserWindow, Menu, Tray, nativeImage, ipcMain, Notification } = require('electron');
 const path = require('path');
 const { app: express, server } = require('./server')
 const isDev = require('electron-is-dev');
 const os = require('os');
 const fs = require("fs");
 const { channels } = require('../src/shared/constants');
+const Store = require('electron-store');
+const store = new Store();
+const fetch = require('electron-fetch').default
 
 let win;
 function createWindow() {
@@ -34,16 +37,12 @@ function createWindow() {
   }
 
 }
-ipcMain.on(channels.GET_DATA, (event, arg) => {
-  const product = arg;
-  win.hide();
-  console.log(product);
-});
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-
+let tray;
 const createTray = () => {
   const iconPath = path.join(__dirname, "./icon/icon.png")
   console.log(__dirname)
@@ -91,6 +90,14 @@ const createTray = () => {
       }
     },
     {
+      label: 'Restart Service',
+      click: () => {
+        store.delete('key')
+        tray.destroy();
+        createWindow();
+      }
+    },
+    {
       label: 'Quit',
       click: () => app.quit()
     }
@@ -124,8 +131,81 @@ const createTray = () => {
 }
 
 
-app.once('ready', createTray)
-app.whenReady().then(createWindow);
+
+// const { net } = require('electron')
+// const request = net.request('http://localhost:8000/project/getUsers/')
+// request.on('response', (response) => {
+//   console.log(`STATUS: ${response.statusCode}`)
+//   console.log(`HEADERS: ${JSON.stringify(response.headers)}`)
+//   response.on('data', (chunk) => {
+//     console.log(`BODY: ${chunk}`)
+//   })
+//   response.on('end', () => {
+//     console.log('No more data in response.')
+//   })
+// })
+// request.end()
+ipcMain.on(channels.GET_LICENSE, (event, arg) => {
+  store.set('key', arg)
+  console.log(store.get('key'))
+})
+app.whenReady().then(() => {
+  var key = store.get('key') ?? " ";
+  console.log(`key:${key}`);
+  let body = '';
+  var postData = JSON.stringify({ "key": key });
+  const { net } = require('electron');
+  const request = net.request({
+    method: 'POST',
+    url: "http://localhost:8000/project/getUsers/",
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+  request.write(postData);
+  request.on('response', (response) => {
+    console.log(`STATUS: ${response.statusCode}`)
+    console.log(`HEADERS: ${JSON.stringify(response.headers)}`)
+    console.log(response.body)
+    response.on('data', (chunk) => {
+      console.log(`BODY: ${chunk}`)
+      body = JSON.parse(chunk.toString())
+      app.whenReady().then(() => {
+        if (body.message != "Activated") {
+          const NOTIFICATION_TITLE = 'Basic Notification'
+          const NOTIFICATION_BODY = body.message
+
+          function showNotification() {
+            new Notification({ title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY }).show()
+          }
+          app.whenReady().then(showNotification).then(() => {
+            setTimeout(createWindow, 3000)
+          });
+        } else {
+          createTray();
+        }
+      })
+      console.log(body.message);
+    })
+    response.on('end', () => {
+      console.log('No more data in response.')
+    })
+  })
+
+  request.end()
+})
+
+
+
+
+ipcMain.on(channels.GET_DATA, (event, arg) => {
+  const product = arg;
+  win.hide();
+  app.whenReady().then(createTray)
+  console.log(product);
+});
+
+
 
 
 

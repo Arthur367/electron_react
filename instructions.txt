@@ -1,0 +1,3 @@
+To run the add first run npm install or yarn install.
+Then run the command npm run dev or yarn dev
+The electron app will be communicating with the server check if license key is activated or not durning initialization.
