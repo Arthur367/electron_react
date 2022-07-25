@@ -154,50 +154,53 @@ app.whenReady().then(() => {
   console.log(`key:${key}`);
   let body = '';
   var postData = JSON.stringify({ "key": key });
-  try {
-    const { net } = require('electron');
-    const request = net.request({
-      method: 'POST',
-      url: "http://localhost:8000/project/getUsers/",
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-    request.write(postData);
-    request.on('response', (response) => {
-      console.log(`STATUS: ${response.statusCode}`)
-      console.log(`HEADERS: ${JSON.stringify(response.headers)}`)
-      console.log(response.body)
-      response.on('data', (chunk) => {
-        console.log(`BODY: ${chunk}`)
-        body = JSON.parse(chunk.toString())
-        app.whenReady().then(() => {
-          if (body.message != "Activated") {
-            const NOTIFICATION_TITLE = 'Basic Notification'
-            const NOTIFICATION_BODY = body.message
 
-            function showNotification() {
-              new Notification({ title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY }).show()
-            }
-            app.whenReady().then(showNotification).then(() => {
-              setTimeout(createWindow, 3000)
-              console.log(`version ${app.getVersion()}`);
-            });
-          } else {
-            createTray();
+  const { net } = require('electron');
+  const request = net.request({
+    method: 'POST',
+    url: "https://esd.netbotapp.com/project/getUsers/",
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+  request.write(postData);
+  request.on('response', (response) => {
+    console.log(`STATUS: ${response.statusCode}`)
+    console.log(`HEADERS: ${JSON.stringify(response.headers)}`)
+    console.log(response.body)
+    response.on('data', (chunk) => {
+      console.log(`BODY: ${chunk}`)
+      body = JSON.parse(chunk.toString())
+      app.whenReady().then(() => {
+        if (body.message != "Activated") {
+          const NOTIFICATION_TITLE = 'Basic Notification'
+          const NOTIFICATION_BODY = body.message
+
+          function showNotification() {
+            new Notification({ title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY }).show()
           }
-        })
-        console.log(body.message);
+          app.whenReady().then(showNotification).then(() => {
+            setTimeout(createWindow, 3000)
+            console.log(`version ${app.getVersion()}`);
+          });
+        } else {
+          createTray();
+          console.log(`version ${app.getVersion()}`);
+        }
       })
-      response.on('end', () => {
-        console.log('No more data in response.')
-      })
+      console.log(body.message);
     })
+    response.on('end', () => {
+      console.log('No more data in response.')
+    })
+  })
 
-    request.end()
-  } catch (e) {
-    console.log(e)
-  }
+  request.end()
+
+})
+
+ipcMain.on('errorInWindow', (event, data) => {
+  console.log(data);
 })
 
 
