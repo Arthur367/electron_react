@@ -1,6 +1,6 @@
 // ./public/electron.js
 
-const { app, BrowserWindow, Menu, Tray, nativeImage, ipcMain, Notification } = require('electron');
+const { app, BrowserWindow, Menu, dialog, Tray, nativeImage, ipcMain, Notification, ipcRenderer } = require('electron');
 const path = require('path');
 const { app: express, server } = require('./server')
 const isDev = require('electron-is-dev');
@@ -12,6 +12,7 @@ const store = new Store();
 const fetch = require('electron-fetch').default
 
 let win;
+var isAppQuitting = false;
 function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
@@ -38,6 +39,43 @@ function createWindow() {
 
 }
 
+let logWindow;
+function createLogWindow() {
+  logWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+      enableRemoteModule: true,
+      contextIsolation: false,
+    },
+  });
+  logWindow.loadURL(
+    isDev
+      ? 'http://localhost:3000'
+      : `file://${path.join(__dirname, '../build/index.html')}`
+  );
+  // Open the DevTools.
+  if (isDev) {
+    logWindow.webContents.openDevTools({ mode: 'detach' });
+  }
+  logWindow.on('close', (event) => {
+    if (app.quitting) {
+      app.quit();
+    } else {
+      event.preventDefault()
+      logWindow.hide()
+    }
+  });
+}
+
+app.on("before-quit", (event) => {
+  isAppQuitting = true;
+  logWindow.on("closed", () => {
+    app.quit();
+  })
+
+})
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -47,7 +85,7 @@ const createTray = () => {
   const iconPath = path.join(__dirname, "./icon/icon.png")
   console.log(__dirname)
   const trayIcon = nativeImage.createFromPath(iconPath).resize({ width: 24, height: 24 })
-  const tray = new Tray(trayIcon)
+  tray = new Tray(trayIcon)
   const menuTemplate = [
     {
       label: null,
@@ -78,6 +116,17 @@ const createTray = () => {
       }
     },
     {
+      label: 'Log',
+      click: () => {
+        // ipcRenderer.send(channels.GET_LOG, "open log");
+        app.whenReady().then(createLogWindow);
+        ipcMain.on(channels.GET_LOG, (event, arg) => {
+          event.sender.send(channels.GET_LOG, "Ok");
+        })
+
+      }
+    },
+    {
       label: 'About',
       click: () => {
         dialog.showMessageBox({
@@ -93,7 +142,10 @@ const createTray = () => {
       label: 'Restart Service',
       click: () => {
         store.delete('key')
-        tray.destroy();
+        ipcMain.on(channels.GET_LOG, (event, arg) => {
+          event.sender.send(channels.GET_LOG, "Nope");
+        })
+        global.tray.destroy();
         createWindow();
       }
     },
@@ -129,8 +181,9 @@ const createTray = () => {
     buildTrayMenu(menuTemplate)
   })
 }
-
-
+ipcMain.on(channels.LOG_DATA, (event, arg) => {
+  event.sender.send(channels.LOG_DATA, store.get("log"));
+})
 
 // const { net } = require('electron')
 // const request = net.request('http://localhost:8000/project/getUsers/')

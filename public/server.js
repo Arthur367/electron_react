@@ -8,7 +8,13 @@ const qr = require('qr-image')
 const Jimp = require("jimp")
 const xml2js = require('xml2js').parseString
 
+const Store = require('electron-store');
+const store = new Store();
+
 const path = require('path')
+
+const { channels } = require('../src/shared/constants')
+const { response } = require('express')
 
 const host = "0.0.0.0"
 const port = "3500"
@@ -20,7 +26,21 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 // var Tremol = require("./nodejs_tremol_loader").load([path.join(__dirname, "./fp_core.js"), path.join(__dirname, "./fp.js")]);
 // var fp = Tremol.FP();
-app.get('/', (req, res) => res.send('ESD App Running'))
+app.get('/', (req, res) => {
+  res.send('ESD App Running');
+  // ipcRenderer.send(channels.LOG_DATA, "ESD App Running");
+
+  //Add this code everywhere you want to get log to be able to veiw log
+  var date = Date.now();
+  // store.set({log: {
+  //   title: "Client Server",
+  //   request: req.body,
+  //   response: " ESD App Running",
+  //   time: date.toLocaleTimeString()
+  // }})
+  store.set("log", req.body)
+})
+
 // app.get('/total', (req, res) => {
 
 //   // while (true) {
@@ -64,6 +84,7 @@ app.post('/esd', (req, res) => {
   payload = req.body
   items = payload.items_list
   led = payload.led_list
+  store.set("log", "ESD App Running")
 
   let item_array = []
   if (items) {
@@ -100,6 +121,7 @@ app.post('/esd', (req, res) => {
 
       res.setHeader('Content-Type', 'application/json');
       res.send(result1);
+      store.set("log", result1);
 
       if (qr_image_path) {
         var qrcode = result2['verify_url']
@@ -132,6 +154,7 @@ app.post('/esd', (req, res) => {
           const message = JSON.parse(error_message);
           res.setHeader('Content-Type', 'application/json');
           res.send(message);
+          store.set("log", message)
         }
       } else {
         res.setHeader('Content-Type', 'application/json');
