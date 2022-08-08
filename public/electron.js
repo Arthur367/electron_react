@@ -56,14 +56,14 @@ function createLogWindow() {
   if (isDev) {
     logWindow.webContents.openDevTools({ mode: 'detach' });
   }
-  // logWindow.on('close', (event) => {
-  //   if (app.quitting) {
-  //     app.quit();
-  //   } else {
-  //     event.preventDefault()
-  //     logWindow.hide()
-  //   }
-  // });
+  logWindow.on('close', (event) => {
+    if (app.quitting) {
+      app.quit();
+    } else {
+      event.preventDefault()
+      logWindow.hide()
+    }
+  });
 }
 
 app.on("before-quit", (event) => {

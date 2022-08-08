@@ -13,16 +13,7 @@ var rfs = require('rotating-file-stream')
 var log4js = require('log4js');
 const morganBody = require('morgan-body');
 
-const Store = require('electron-store');
-const store = new Store();
-
 const path = require('path')
-
-
-
-
-
-
 const host = "0.0.0.0"
 const port = "3500"
 
