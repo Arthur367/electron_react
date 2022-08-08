@@ -7,14 +7,21 @@ const server = http.createServer(app)
 const qr = require('qr-image')
 const Jimp = require("jimp")
 const xml2js = require('xml2js').parseString
+const fs = require('fs');
+const morgan = require('morgan')
+var rfs = require('rotating-file-stream')
+var log4js = require('log4js');
+const morganBody = require('morgan-body');
 
 const Store = require('electron-store');
 const store = new Store();
 
 const path = require('path')
 
-const { channels } = require('../src/shared/constants')
-const { response } = require('express')
+
+
+
+
 
 const host = "0.0.0.0"
 const port = "3500"
@@ -24,21 +31,94 @@ app.set('Port', port)
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
+
+//log data and  written to file here
+const log = rfs.createStream('access.log', {
+  interval: '1d', // rotate daily
+  path: path.join(__dirname, 'access')
+});
+morganBody(app, {
+  noColors: true,
+  stream: log
+});
+
 // var Tremol = require("./nodejs_tremol_loader").load([path.join(__dirname, "./fp_core.js"), path.join(__dirname, "./fp.js")]);
 // var fp = Tremol.FP();
+
+// morgan.token('body', function getBody(req, res) {
+//   var request = {
+//     "request": req.body,
+
+//   }
+//   return JSON.stringify(request);
+// })
+// morgan.token("response", function getResponse(req, res) {
+//   var response = {
+//     "response": { "data": express.Response, "statusCode": res.statusCode }
+
+//   }
+//   return JSON.stringify(response);
+// });
+// morgan.token('timestamp', function getTimestamp(req) {
+//   var date = new Date();
+//   return date.toLocaleTimeString();
+// })
+// morgan.token('ip', function getIp(req) {
+//   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+//   return ip;
+// })
+// var accessLogStream = rfs.createStream('access.log', {
+//   interval: '1d', // rotate daily
+//   path: path.join(__dirname, 'access')
+// });
+
+
+
+// // setup the logger
+// app.use(morgan(':ip :body :response :method :url :status :timestamp ', { stream: accessLogStream }));
+
+// log4js.configure({
+//   appenders: {
+//     fileLog: { type: 'file', filename: path.join(__dirname, 'express.log') },
+//     console: { type: 'console' }
+//   },
+//   categories: {
+//     file: { appenders: ['fileLog'], level: 'error' },
+//     another: { appenders: ['console'], level: 'trace' },
+//     default: { appenders: ['console', 'fileLog'], level: 'trace' }
+//   }
+//   // [{ type: 'console' },
+//   // { type: 'file', filename: path.join(__dirname, 'express.log'), category: 'dev' }]
+// });
+
+// var logger = log4js.getLogger('dev');
+
+
+// app.use(log4js.connectLogger(logger, { level: log4js.levels.DEBUG }));
+
 app.get('/', (req, res) => {
   res.send('ESD App Running');
   // ipcRenderer.send(channels.LOG_DATA, "ESD App Running");
 
   //Add this code everywhere you want to get log to be able to veiw log
-  var date = Date.now();
+  var date = new Date();
+
   // store.set({log: {
   //   title: "Client Server",
   //   request: req.body,
   //   response: " ESD App Running",
   //   time: date.toLocaleTimeString()
   // }})
+
+  // var logFile = fs.createWriteStream('./myLogFile.log', { flags: 'a' }); //use {flags: 'w'} to open in write mode
+
+  // console.log(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
   store.set("log", req.body)
+  // fs.writeFile("Documents/esd_log.txt", JSON.stringify(req.body), (err) => {
+  //   if (err) console.log(err);
+  //   console.log("File written successfully");
+  // });
 })
 
 // app.get('/total', (req, res) => {
@@ -116,6 +196,7 @@ app.post('/esd', (req, res) => {
   axios.post(req.headers.hostname, payload, options)
     .then((x) => {
       var result = JSON.stringify(x.data.replace(/\\/g, ""));
+      responseBody = result;
       var result1 = JSON.parse(result);
       var result2 = JSON.parse(result1);
 
@@ -144,8 +225,9 @@ app.post('/esd', (req, res) => {
 
 
     }).catch(ex => {
-      if (ex['response']['data']) {
-        let err = ex['response']['data'];
+      console.log(ex)
+      if (ex['response']) {
+        let err = ex['response'];
         if (typeof err == 'object') {
           res.setHeader('Content-Type', 'application/json');
           res.send(err);

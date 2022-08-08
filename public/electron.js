@@ -10,6 +10,7 @@ const { channels } = require('../src/shared/constants');
 const Store = require('electron-store');
 const store = new Store();
 const fetch = require('electron-fetch').default
+const shell = require('electron').shell
 
 let win;
 var isAppQuitting = false;
@@ -50,31 +51,23 @@ function createLogWindow() {
       contextIsolation: false,
     },
   });
-  logWindow.loadURL(
-    isDev
-      ? 'http://localhost:3000'
-      : `file://${path.join(__dirname, '../build/index.html')}`
-  );
-  // Open the DevTools.
+  logWindow.loadFile(path.join(__dirname, 'access/access.log'));
+
   if (isDev) {
     logWindow.webContents.openDevTools({ mode: 'detach' });
   }
-  logWindow.on('close', (event) => {
-    if (app.quitting) {
-      app.quit();
-    } else {
-      event.preventDefault()
-      logWindow.hide()
-    }
-  });
+  // logWindow.on('close', (event) => {
+  //   if (app.quitting) {
+  //     app.quit();
+  //   } else {
+  //     event.preventDefault()
+  //     logWindow.hide()
+  //   }
+  // });
 }
 
 app.on("before-quit", (event) => {
   isAppQuitting = true;
-  logWindow.on("closed", () => {
-    app.quit();
-  })
-
 })
 
 // This method will be called when Electron has finished
@@ -120,10 +113,14 @@ const createTray = () => {
       click: () => {
         // ipcRenderer.send(channels.GET_LOG, "open log");
         app.whenReady().then(createLogWindow);
-        ipcMain.on(channels.GET_LOG, (event, arg) => {
-          event.sender.send(channels.GET_LOG, "Ok");
-        })
-
+        // ipcMain.on(channels.GET_LOG, (event, arg) => {
+        //   event.sender.send(channels.GET_LOG, "Ok");
+        // })
+        // fs.readFileSync("Documents/esd_log.txt", "utf8");
+        // fs.readFile(__dirname + '/access.log', "utf8", function (err, data) {
+        //   if (err) return console.log(err);
+        //   // data is the contents of the text file we just read
+        // })
       }
     },
     {
@@ -181,9 +178,9 @@ const createTray = () => {
     buildTrayMenu(menuTemplate)
   })
 }
-ipcMain.on(channels.LOG_DATA, (event, arg) => {
-  event.sender.send(channels.LOG_DATA, store.get("log"));
-})
+// ipcMain.on(channels.LOG_DATA, (event, arg) => {
+//   event.sender.send(channels.LOG_DATA, store.get("log"));
+// })
 
 // const { net } = require('electron')
 // const request = net.request('http://localhost:8000/project/getUsers/')

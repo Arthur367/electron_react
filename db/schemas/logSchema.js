@@ -1,0 +1,4 @@
+// const logSchema = {
+//   type: 'object',
+
+// }

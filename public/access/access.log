@@ -1,0 +1,52 @@
+
+Request: POST /trial at Mon Aug 08 2022 15:11:58 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "25_02_2022",
+	"invoice_number": "250220221132",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"customer_exid": "",
+	"grand_total": "1000.00",
+	"net_subtotal": "1000.00",
+	"tax_total": "0.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSH",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 Item 1.00 1000.00 1000.00"
+	]
+}
+Response Body:
+[
+	"0001.11.00 Item 1.00 1000.00 1000.00"
+]
+Response: 200 2.418 ms 
+
+Request: POST /esd at Mon Aug 08 2022 15:12:24 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "25_02_2022",
+	"invoice_number": "250220221132",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"customer_exid": "",
+	"grand_total": "1000.00",
+	"net_subtotal": "1000.00",
+	"tax_total": "0.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSH",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 Item 1.00 1000.00 1000.00"
+	]
+}
+Response Body:
+{
+	"invoice_number": "250220221132",
+	"cu_serial_number": "KRAMW009202108008133 08.XXX2022 XXX12:21",
+	"cu_invoice_number": "0090081330000011053",
+	"verify_url": "https://tims-test.kra.go.ke/KRA-Portal/invoiceChk.htm?actionCode=loadPage&invoiceNo=0090081330000011053",
+	"description": "Signed successfully."
+}
+Response: 200 1633.459 ms 

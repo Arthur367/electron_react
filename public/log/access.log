@@ -1,0 +1,108 @@
+
+[96mRequest: [93mPOST [97m/esd [90mat [37mMon Aug 08 2022 14:50:52 GMT+0300, [90mIP: [37m127.0.0.1[0m, [90mUser Agent: PostmanRuntime/7.29.2[0m
+[95mRequest Body:[0m
+[97m{[0m
+[97m	"invoice_date": "25_02_2022",[0m
+[97m	"invoice_number": "250220221132",[0m
+[97m	"invoice_pin": "P051201909L",[0m
+[97m	"customer_pin": "P051241778C",[0m
+[97m	"customer_exid": "",[0m
+[97m	"grand_total": "1000.00",[0m
+[97m	"net_subtotal": "1000.00",[0m
+[97m	"tax_total": "0.00",[0m
+[97m	"net_discount_total": "0.00",[0m
+[97m	"sel_currency": "KSH",[0m
+[97m	"rel_doc_number": "",[0m
+[97m	"items_list": [[0m
+[97m		"0001.11.00 Item 1.00 1000.00 1000.00"[0m
+[97m	][0m
+[97m}[0m
+[95mResponse Body:[0m
+[97m{[0m
+[97m	"invoice_number": "250220221132",[0m
+[97m	"cu_serial_number": "KRAMW009202108008133 08.XXX2022 XXX50:50",[0m
+[97m	"cu_invoice_number": "0090081330000011021",[0m
+[97m	"verify_url": "https://tims-test.kra.go.ke/KRA-Portal/invoiceChk.htm?actionCode=loadPage&invoiceNo=0090081330000011021",[0m
+[97m	"description": "Signed successfully."[0m
+[97m}[0m
+[96mResponse: [32m200 [37m2725.529 ms 
+
+Request: POST /esd at Mon Aug 08 2022 14:52:29 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "25_02_2022",
+	"invoice_number": "250220221132",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"customer_exid": "",
+	"grand_total": "1000.00",
+	"net_subtotal": "1000.00",
+	"tax_total": "0.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSH",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 Item 1.00 1000.00 1000.00"
+	]
+}
+Response Body:
+{
+	"invoice_number": "250220221132",
+	"cu_serial_number": "KRAMW009202108008133 08.XXX2022 XXX52:26",
+	"cu_invoice_number": "0090081330000011022",
+	"verify_url": "https://tims-test.kra.go.ke/KRA-Portal/invoiceChk.htm?actionCode=loadPage&invoiceNo=0090081330000011022",
+	"description": "Signed successfully."
+}
+Response: 200 2360.113 ms 
+
+Request: POST /esd at Mon Aug 08 2022 14:53:38 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "25_02_2022",
+	"invoice_number": "250220221132",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"customer_exid": "",
+	"grand_total": "1000.00",
+	"net_subtotal": "1000.00",
+	"tax_total": "0.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSH",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 Item 1.00 1000.00 1000.00"
+	]
+}
+Response Body:
+{
+	"invoice_number": "250220221132",
+	"cu_serial_number": "KRAMW009202108008133 08.XXX2022 XXX53:35",
+	"cu_invoice_number": "0090081330000011024",
+	"verify_url": "https://tims-test.kra.go.ke/KRA-Portal/invoiceChk.htm?actionCode=loadPage&invoiceNo=0090081330000011024",
+	"description": "Signed successfully."
+}
+Response: 200 1560.005 ms 
+
+Request: POST /trial at Mon Aug 08 2022 14:56:35 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "25_02_2022",
+	"invoice_number": "250220221132",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"customer_exid": "",
+	"grand_total": "1000.00",
+	"net_subtotal": "1000.00",
+	"tax_total": "0.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSH",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 Item 1.00 1000.00 1000.00"
+	]
+}
+Response Body:
+[
+	"0001.11.00 Item 1.00 1000.00 1000.00"
+]
+Response: 200 1.736 ms 
