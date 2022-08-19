@@ -48,7 +48,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "concurrently -k \"BROWSER=none yarn start\" \"yarn:electron\"",
+    "dev": "concurrently -k \"cross-env BROWSER=none yarn start\" \"yarn:electron\"",
     "electron": "wait-on tcp:3000 && electron .",
     "package": "react-scripts build && electron-forge package",
     "make-mac": "react-scripts build && electron-forge make --platform darwin",

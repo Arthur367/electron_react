@@ -15,7 +15,7 @@ const morganBody = require('morgan-body');
 
 const path = require('path')
 const host = "0.0.0.0"
-const port = "3500"
+const port = "35040"
 
 app.set('Host', host)
 app.set('Port', port)
@@ -105,7 +105,7 @@ app.get('/', (req, res) => {
   // var logFile = fs.createWriteStream('./myLogFile.log', { flags: 'a' }); //use {flags: 'w'} to open in write mode
 
   // console.log(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-  store.set("log", req.body)
+  // store.set("log", req.body)
   // fs.writeFile("Documents/esd_log.txt", JSON.stringify(req.body), (err) => {
   //   if (err) console.log(err);
   //   console.log("File written successfully");
@@ -155,7 +155,7 @@ app.post('/esd', (req, res) => {
   payload = req.body
   items = payload.items_list
   led = payload.led_list
-  store.set("log", "ESD App Running")
+  // store.set("log", "ESD App Running")
 
   let item_array = []
   if (items) {
@@ -193,7 +193,7 @@ app.post('/esd', (req, res) => {
 
       res.setHeader('Content-Type', 'application/json');
       res.send(result1);
-      store.set("log", result1);
+      // store.set("log", result1);
 
       if (qr_image_path) {
         var qrcode = result2['verify_url']
@@ -227,7 +227,7 @@ app.post('/esd', (req, res) => {
           const message = JSON.parse(error_message);
           res.setHeader('Content-Type', 'application/json');
           res.send(message);
-          store.set("log", message)
+          // store.set("log", message)
         }
       } else {
         res.setHeader('Content-Type', 'application/json');
