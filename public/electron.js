@@ -8,9 +8,12 @@ const os = require('os');
 const fs = require("fs");
 const { channels } = require('../src/shared/constants');
 const Store = require('electron-store');
+const storedbdata = require('../src/storedbdata');
 const store = new Store();
 const fetch = require('electron-fetch').default
 const shell = require('electron').shell
+
+
 
 let win;
 var isAppQuitting = false;
@@ -51,7 +54,12 @@ function createLogWindow() {
       contextIsolation: false,
     },
   });
-  logWindow.loadFile(path.join(__dirname, 'access/access.log'));
+  // logWindow.loadFile(path.join(__dirname, 'access/access.log'));
+  logWindow.loadURL(
+    isDev
+      ? 'http://localhost:3000'
+      : `file://${path.join(__dirname, '../build/index.html')}`
+  );
 
   if (isDev) {
     logWindow.webContents.openDevTools({ mode: 'detach' });
@@ -69,6 +77,35 @@ function createLogWindow() {
 app.on("before-quit", (event) => {
   isAppQuitting = true;
 })
+
+storedbdata.findRequest().then((docs) => {
+  // console.log(docs)
+  ipcMain.once(channels.RECEIVE_REQUEST_LOG, (event, arg) => {
+    if (arg === "OK") {
+      event.sender.send(channels.RECEIVE_REQUEST_LOG, docs);
+    } else {
+      ipcMain.removeAllListeners(channels.RECEIVE_REQUEST_LOG);
+    }
+  })
+}).catch((err) => {
+  console.log(err);
+})
+storedbdata.findResponse().then((docs) => {
+  ipcMain.once(channels.RECEIVE_RESPONSE_LOG, (event, arg) => {
+    if (arg === "OK") {
+      event.sender.send(channels.RECEIVE_RESPONSE_LOG, docs);
+    } else {
+      ipcMain.removeAllListeners(channels.RECEIVE_RESPONSE_LOG);
+    }
+  })
+}).catch((err) => {
+  console.error(err);
+})
+storedbdata.findAll().then((docs) => {
+  ipcMain.once(channels.RECEIVE_LOG, (event, arg) => {
+    event.sender.send(channels.RECEIVE_LOG, docs);
+  })
+}).catch(err => console.log(err));
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -113,9 +150,10 @@ const createTray = () => {
       click: () => {
         // ipcRenderer.send(channels.GET_LOG, "open log");
         app.whenReady().then(createLogWindow);
-        // ipcMain.on(channels.GET_LOG, (event, arg) => {
-        //   event.sender.send(channels.GET_LOG, "Ok");
-        // })
+        ipcMain.on(channels.GET_LOG, (event, arg) => {
+          event.sender.send(channels.GET_LOG, "Ok");
+        })
+
         // fs.readFileSync("Documents/esd_log.txt", "utf8");
         // fs.readFile(__dirname + '/access.log', "utf8", function (err, data) {
         //   if (err) return console.log(err);
@@ -178,8 +216,16 @@ const createTray = () => {
     buildTrayMenu(menuTemplate)
   })
 }
+// var log;
+// fs.readFile(__dirname + '/log/access2.json', "utf8", function (err, data) {
+//   if (err) return console.log(err);
+//   // data is the contents of the text file we just read
+//   console.log(data);
+//   log = data;
+//   return data;
+// })
 // ipcMain.on(channels.LOG_DATA, (event, arg) => {
-//   event.sender.send(channels.LOG_DATA, store.get("log"));
+//   event.sender.send(channels.LOG_DATA, log);
 // })
 
 // const { net } = require('electron')

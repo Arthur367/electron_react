@@ -24,6 +24,7 @@ function App() {
     }
   })
   if (showLog) {
+    ipcRenderer.send(channels.RECEIVE_LOG, "Please");
     return (
       <BrowserRouter>
         <Routes>
@@ -39,6 +40,7 @@ function App() {
           <Route exact path='/' element={< MainPage />}></Route>
           <Route exact path='/license' element={< InputLicense />}></Route>
           <Route exact path="/subUser" element={<SubmitSubUserAccess />}></Route>
+          <Route exact path="/log" element={<Log />}></Route>
         </Routes>
       </BrowserRouter>
 

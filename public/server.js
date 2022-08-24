@@ -10,10 +10,17 @@ const xml2js = require('xml2js').parseString
 const fs = require('fs');
 const morgan = require('morgan')
 var rfs = require('rotating-file-stream')
+
 var log4js = require('log4js');
 const morganBody = require('morgan-body');
 
+
+const { channels } = require('../src/shared/constants');
+
+
 const path = require('path')
+const storedbdata = require('../src/storedbdata')
+
 const host = "0.0.0.0"
 const port = "3500"
 
@@ -34,128 +41,103 @@ morganBody(app, {
   stream: log
 });
 
-// var Tremol = require("./nodejs_tremol_loader").load([path.join(__dirname, "./fp_core.js"), path.join(__dirname, "./fp.js")]);
-// var fp = Tremol.FP();
+const originalSend = app.response.send
 
-// morgan.token('body', function getBody(req, res) {
-//   var request = {
-//     "request": req.body,
+app.response.send = function sendOverWrite(body) {
+  originalSend.call(this, body)
+  this.__custombody__ = body
+}
+morgan.token('res-body', (_req, res) =>
+  JSON.stringify(res.__custombody__),
+)
+//get the request log using moran and then saving it to local db using nedb
+morgan.token('body', function getBody(req, res) {
+  var url = req.url;
+  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  var method = req.method;
+  var date = new Date();
+  var all = {
+    "data": "all",
+    "request": {
+      "url": url,
+      "ip": ip,
+      "method": method,
+      "request_data": req.body,
+      "date": date.toLocaleDateString(),
+      "time": date.toLocaleTimeString()
+    },
+    "response": {
+      "statusCode": res.statusCode,
+      "ip": ip,
+      "date": date.toLocaleDateString,
+      "time": date.toLocaleTimeString(),
+      "data": res.__custombody__,
+    }
 
-//   }
-//   return JSON.stringify(request);
-// })
-// morgan.token("response", function getResponse(req, res) {
-//   var response = {
-//     "response": { "data": express.Response, "statusCode": res.statusCode }
-
-//   }
-//   return JSON.stringify(response);
-// });
-// morgan.token('timestamp', function getTimestamp(req) {
-//   var date = new Date();
-//   return date.toLocaleTimeString();
-// })
-// morgan.token('ip', function getIp(req) {
-//   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-//   return ip;
-// })
-// var accessLogStream = rfs.createStream('access.log', {
-//   interval: '1d', // rotate daily
-//   path: path.join(__dirname, 'access')
-// });
-
-
-
-// // setup the logger
-// app.use(morgan(':ip :body :response :method :url :status :timestamp ', { stream: accessLogStream }));
-
-// log4js.configure({
-//   appenders: {
-//     fileLog: { type: 'file', filename: path.join(__dirname, 'express.log') },
-//     console: { type: 'console' }
-//   },
-//   categories: {
-//     file: { appenders: ['fileLog'], level: 'error' },
-//     another: { appenders: ['console'], level: 'trace' },
-//     default: { appenders: ['console', 'fileLog'], level: 'trace' }
-//   }
-//   // [{ type: 'console' },
-//   // { type: 'file', filename: path.join(__dirname, 'express.log'), category: 'dev' }]
-// });
-
-// var logger = log4js.getLogger('dev');
+  }
+  var request = {
+    "data": "request",
+    "request": {
+      "url": url,
+      "ip": ip,
+      "method": method,
+      "request_data": req.body,
+      "date": date.toLocaleDateString(),
+      "time": date.toLocaleTimeString()
+    },
 
 
-// app.use(log4js.connectLogger(logger, { level: log4js.levels.DEBUG }));
+  }
+  storedbdata.create(all);
+  storedbdata.create(request);
+  return JSON.stringify(request);
+})
+
+
+//get the responsee log using moran and then saving it to local db using nedb
+morgan.token("response", function getResponse(req, res) {
+  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  var date = new Date();
+  var response = {
+    "data": "response",
+    "response": { "statusCode": res.statusCode, "ip": ip, "date": date.toLocaleDateString, "time": date.toLocaleTimeString(), "data": res.__custombody__, }
+
+  }
+  storedbdata.create(response);
+  return JSON.stringify(response);
+});
+morgan.token('timestamp', function getTimestamp(req) {
+  var date = new Date();
+  return date.toLocaleTimeString();
+})
+morgan.token('ip', function getIp(req) {
+  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  return ip;
+})
+var accessLogStream = rfs.createStream('access2.json', {
+  interval: '1d', // rotate daily
+  path: path.join(__dirname, 'log')
+});
+app.use(morgan(':body, :response ', { stream: accessLogStream }));
+
 
 app.get('/', (req, res) => {
   res.send('ESD App Running');
   // ipcRenderer.send(channels.LOG_DATA, "ESD App Running");
 
   //Add this code everywhere you want to get log to be able to veiw log
-  var date = new Date();
 
-  // store.set({log: {
-  //   title: "Client Server",
-  //   request: req.body,
-  //   response: " ESD App Running",
-  //   time: date.toLocaleTimeString()
-  // }})
 
-  // var logFile = fs.createWriteStream('./myLogFile.log', { flags: 'a' }); //use {flags: 'w'} to open in write mode
 
-  // console.log(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-  store.set("log", req.body)
-  // fs.writeFile("Documents/esd_log.txt", JSON.stringify(req.body), (err) => {
-  //   if (err) console.log(err);
-  //   console.log("File written successfully");
-  // });
 })
 
-// app.get('/total', (req, res) => {
 
-//   // while (true) {
-//   fp.ServerSetSettings("196.207.19.131", 4444);
-
-//   // fp.ApplyClientLibraryDefinations();
-//   setTimeout(() => {
-//     var device = fp.ServerFindDevice();
-//     if (device) {
-//       fp.ServerSetDeviceSerialSettings(device.serialPort, device.baudRate, false); //If FD is connected on serial port or USB
-//       fp.PrintDiagnostics();
-//     }
-//     else {
-//       console.log("Device not found");
-//     }
-//     try {
-//       var status = fp.ReadStatus()
-//       console.log(status)
-//       if (status) {
-//         res.send("Ok")
-//         // break;
-//       }
-
-//       if (!status) {
-//         console.log('error');
-//         res.send('Check Log and Code')
-//       }
-
-//       res.send("Done")
-//     } catch (e) {
-//       console.log(e)
-//     }
-//   })
-//   // fp.ServerSetDeviceTcpSettings("196.207.19.131", 8000, "Password");
-
-
-//   // }
-// })
 app.post('/esd', (req, res) => {
 
   payload = req.body
   items = payload.items_list
   led = payload.led_list
-  store.set("log", "ESD App Running")
+  // store.set("log", "ESD App Running")
 
   let item_array = []
   if (items) {
@@ -193,7 +175,7 @@ app.post('/esd', (req, res) => {
 
       res.setHeader('Content-Type', 'application/json');
       res.send(result1);
-      store.set("log", result1);
+      // store.set("log", result1);
 
       if (qr_image_path) {
         var qrcode = result2['verify_url']
@@ -221,17 +203,17 @@ app.post('/esd', (req, res) => {
         let err = ex['response'];
         if (typeof err == 'object') {
           res.setHeader('Content-Type', 'application/json');
-          res.send(err);
+          res.status(500).send(err);
         } else {
           const error_message = JSON.stringify(err.replace(/\\/g, ""));
           const message = JSON.parse(error_message);
           res.setHeader('Content-Type', 'application/json');
-          res.send(message);
-          store.set("log", message)
+          res.status(500).send(message);
+          // store.set("log", message)
         }
       } else {
         res.setHeader('Content-Type', 'application/json');
-        res.send({ "error_status": "Unknown Error, Try Again" });
+        res.status(500).send({ "error_status": "Unknown Error, Try Again" });
       }
     });
 })
@@ -264,11 +246,11 @@ app.post('/device', (req, res) => {
           const error_message = JSON.stringify(err.replace(/\\/g, ""));
           const message = JSON.parse(error_message);
           res.setHeader('Content-Type', 'application/json');
-          res.send(message);
+          res.status(500).send(message);
         }
       } else {
         res.setHeader('Content-Type', 'application/json');
-        res.send({ "error_status": "Unknown Error, Try Again" });
+        res.status(500).send({ "error_status": "Unknown Error, Try Again" });
       }
     })
 })
@@ -290,7 +272,7 @@ app.get('/dtr', (req, res) => {
     fs.readFile(file_path, 'utf-8', function (err, data) {
       if (err) {
         res.setHeader('Content-Type', 'application/json');
-        res.send({
+        res.status(500).send({
           "error_status": "Could not process invoice, check error log",
           "internal_error": String(err)
         });
@@ -458,7 +440,7 @@ app.post('/ace', (req, res) => {
       }
 
       res.setHeader('Content-Type', 'application/json');
-      res.send(error);
+      res.status(500).send(error);
 
     });
 })
@@ -583,7 +565,7 @@ app.post('/datecs', (req, res) => {
       }
 
       res.setHeader('Content-Type', 'application/json');
-      res.send(error);
+      res.status(500).send(error);
 
     });
 })
@@ -705,16 +687,16 @@ app.post('/total_notworking', (req, res) => {
 
         } else {
           // xml fail
-          res.send({ "error_status": `Error Code ${result.Res.$.Code} \n ${result.Res.Err[0].Message[0]}` })
+          res.status(500).send({ "error_status": `Error Code ${result.Res.$.Code} \n ${result.Res.Err[0].Message[0]}` })
           return
         }
       } else {
-        res.send({ "error_status": String(err) })
+        res.status(500).send({ "error_status": String(err) })
         return
       }
     })
   }).catch(error => {
-    res.send({ "error_status": String(error) })
+    res.status(500).send({ "error_status": String(error) })
   })
 
   url_ReadStatus = axios.get(`${print_host}/ReadStatus()`)
@@ -722,16 +704,16 @@ app.post('/total_notworking', (req, res) => {
     xml2js(response.data, (err, result) => {
       if (err == null) {
         if (result.Res.$.Code !== '0') {
-          res.send({ "error_status": `Error Code ${result.Res.$.Code} \n ${result.Res.Err[0].Message[0]}` })
+          res.status(500).send({ "error_status": `Error Code ${result.Res.$.Code} \n ${result.Res.Err[0].Message[0]}` })
           return
         }
       } else {
-        res.send({ "error_status": String(err) })
+        res.status(500).send({ "error_status": String(err) })
         return
       }
     })
   }).catch(error => {
-    res.send({ "error_status": String(error) })
+    res.status(500).send({ "error_status": String(error) })
   })
 
   if (payload.vouchertype == 'Tax Invoice') {
@@ -740,16 +722,16 @@ app.post('/total_notworking', (req, res) => {
       xml2js(response.data, (err, result) => {
         if (err == null) {
           if (result.Res.$.Code !== '0') {
-            res.send({ "error_status": `Error Code ${result.Res.$.Code} \n ${result.Res.Err[0].Message[0]}` })
+            res.status(500).send({ "error_status": `Error Code ${result.Res.$.Code} \n ${result.Res.Err[0].Message[0]}` })
             return
           }
         } else {
-          res.send({ "error_status": String(err) })
+          res.status(500).send({ "error_status": String(err) })
           return
         }
       })
     }).catch(error => {
-      res.send({ "error_status": String(error) })
+      res.status(500).send({ "error_status": String(error) })
     })
   }
 
@@ -759,16 +741,16 @@ app.post('/total_notworking', (req, res) => {
       xml2js(response.data, (err, result) => {
         if (err == null) {
           if (result.Res.$.Code !== '0') {
-            res.send({ "error_status": `Error Code ${result.Res.$.Code} \n ${result.Res.Err[0].Message[0]}` })
+            res.status(500).send({ "error_status": `Error Code ${result.Res.$.Code} \n ${result.Res.Err[0].Message[0]}` })
             return
           }
         } else {
-          res.send({ "error_status": String(err) })
+          res.status(500).send({ "error_status": String(err) })
           return
         }
       })
     }).catch(error => {
-      res.send({ "error_status": String(error) })
+      res.status(500).send({ "error_status": String(error) })
     })
   }
 
@@ -778,16 +760,16 @@ app.post('/total_notworking', (req, res) => {
       xml2js(response.data, (err, result) => {
         if (err == null) {
           if (result.Res.$.Code !== '0') {
-            res.send({ "error_status": `Error Code ${result.Res.$.Code} \n ${result.Res.Err[0].Message[0]}` })
+            res.status(500).send({ "error_status": `Error Code ${result.Res.$.Code} \n ${result.Res.Err[0].Message[0]}` })
             return
           }
         } else {
-          res.send({ "error_status": String(err) })
+          res.status(500).send({ "error_status": String(err) })
           return
         }
       })
     }).catch(error => {
-      res.send({ "error_status": String(error) })
+      res.status(500).send({ "error_status": String(error) })
     })
   }
 
@@ -798,16 +780,16 @@ app.post('/total_notworking', (req, res) => {
       xml2js(response.data, (err, result) => {
         if (err == null) {
           if (result.Res.$.Code !== '0') {
-            res.send({ "error_status": `Error Code ${result.Res.$.Code} \n ${result.Res.Err[0].Message[0]}` })
+            res.status(500).send({ "error_status": `Error Code ${result.Res.$.Code} \n ${result.Res.Err[0].Message[0]}` })
             return
           }
         } else {
-          res.send({ "error_status": String(err) })
+          res.status(500).send({ "error_status": String(err) })
           return
         }
       })
     }).catch(error => {
-      res.send({ "error_status": String(error) })
+      res.status(500).send({ "error_status": String(error) })
     })
   }
 
@@ -820,16 +802,16 @@ app.post('/total_notworking', (req, res) => {
         xml2js(response.data, (err, result) => {
           if (err == null) {
             if (result.Res.$.Code !== '0') {
-              res.send({ "error_status": `Error Code ${result.Res.$.Code} \n ${result.Res.Err[0].Message[0]}` })
+              res.status(500).send({ "error_status": `Error Code ${result.Res.$.Code} \n ${result.Res.Err[0].Message[0]}` })
               return
             }
           } else {
-            res.send({ "error_status": String(err) })
+            res.status(500).send({ "error_status": String(err) })
             return
           }
         })
       }).catch(error => {
-        res.send({ "error_status": String(error) })
+        res.status(500).send({ "error_status": String(error) })
       })
     }
 
@@ -840,11 +822,11 @@ app.post('/total_notworking', (req, res) => {
     xml2js(response.data, (err, result) => {
       if (err == null) {
         if (result.Res.$.Code !== '0') {
-          res.send({ "error_status": `Error Code ${result.Res.$.Code} \n ${result.Res.Err[0].Message[0]}` })
+          res.status(500).send({ "error_status": `Error Code ${result.Res.$.Code} \n ${result.Res.Err[0].Message[0]}` })
           return
         }
       } else {
-        res.send({ "error_status": String(err) })
+        res.status(500).send({ "error_status": String(err) })
         return
       }
     })
@@ -858,16 +840,16 @@ app.post('/total_notworking', (req, res) => {
     xml2js(response.data, (err, result) => {
       if (err == null) {
         if (result.Res.$.Code !== '0') {
-          res.send({ "error_status": `Error Code ${result.Res.$.Code} \n ${result.Res.Err[0].Message[0]}` })
+          res.status(500).send({ "error_status": `Error Code ${result.Res.$.Code} \n ${result.Res.Err[0].Message[0]}` })
           return
         }
       } else {
-        res.send({ "error_status": String(err) })
+        res.status(500).send({ "error_status": String(err) })
         return
       }
     })
   }).catch(error => {
-    res.send({ "error_status": String(error) })
+    res.status(500).send({ "error_status": String(error) })
   })
 
 

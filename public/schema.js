@@ -1,18 +1,10 @@
 const logSchema = {
-  title: {
-    type: 'string'
-  },
-  titleDate: {
-    type: 'date',
-  },
-  time: {
-    type: 'string',
-  },
-  response: {
-    type: 'object',
-  },
-  request: {
-    type: 'object'
+  type: 'object',
+  properties: {
+    log: {
+      type: 'array',
+
+    },
   }
 }
 module.exports = logSchema;

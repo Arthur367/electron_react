@@ -50,3 +50,1367 @@ Response Body:
 	"description": "Signed successfully."
 }
 Response: 200 1633.459 ms 
+
+Request: POST /esd at Tue Aug 23 2022 08:37:12 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		{
+			"hscode": "0001.11.00",
+			"stockitemname": "ExpemptedItem",
+			"qty": "10.00",
+			"rate": "70.00",
+			"amt": "700.00"
+		},
+		{
+			"hscode": "0009.12.00",
+			"stockitemname": "ItemZeroRated",
+			"qty": "10.00",
+			"rate": "300.00",
+			"amt": "3000.00"
+		}
+	]
+}
+Response: 500 2.188 ms 
+
+Request: POST /esd at Tue Aug 23 2022 08:38:10 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		{
+			"hscode": "0001.11.00",
+			"stockitemname": "ExpemptedItem",
+			"qty": "10.00",
+			"rate": "70.00",
+			"amt": "700.00"
+		},
+		{
+			"hscode": "0009.12.00",
+			"stockitemname": "ItemZeroRated",
+			"qty": "10.00",
+			"rate": "300.00",
+			"amt": "3000.00"
+		}
+	]
+}
+Response: 500 0.758 ms 
+
+Request: POST /esd at Tue Aug 23 2022 08:38:26 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 13.259 ms 
+
+Request: POST /esd at Tue Aug 23 2022 08:40:49 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 3.572 ms 
+
+Request: POST /esd at Tue Aug 23 2022 10:30:15 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 8.823 ms 
+
+Request: POST /esd at Tue Aug 23 2022 10:31:59 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 9.817 ms 
+
+Request: POST /esd at Tue Aug 23 2022 10:32:35 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 3.609 ms 
+
+Request: POST /esd at Tue Aug 23 2022 10:36:47 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 10.730 ms 
+
+Request: POST /esd at Tue Aug 23 2022 10:42:36 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 12.756 ms 
+
+Request: POST /esd at Tue Aug 23 2022 10:43:59 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 8.026 ms 
+
+Request: POST /esd at Tue Aug 23 2022 10:47:01 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 12.246 ms 
+
+Request: POST /esd at Tue Aug 23 2022 10:48:54 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 9.514 ms 
+
+Request: POST /esd at Tue Aug 23 2022 10:49:54 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 9.350 ms 
+
+Request: POST /esd at Tue Aug 23 2022 10:50:24 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 11.418 ms 
+
+Request: POST /esd at Tue Aug 23 2022 10:52:51 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 12.765 ms 
+
+Request: POST /esd at Tue Aug 23 2022 10:54:25 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 13.157 ms 
+
+Request: POST /esd at Tue Aug 23 2022 10:56:19 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 9.488 ms 
+
+Request: POST /esd at Tue Aug 23 2022 11:47:54 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 12.583 ms 
+
+Request: POST /esd at Tue Aug 23 2022 11:49:26 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 11.518 ms 
+
+Request: POST /esd at Tue Aug 23 2022 11:49:35 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 2.551 ms 
+
+Request: POST /esd at Tue Aug 23 2022 11:50:15 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 8.126 ms 
+
+Request: POST /esd at Tue Aug 23 2022 11:50:51 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 17.365 ms 
+
+Request: POST /esd at Tue Aug 23 2022 12:15:31 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 8.342 ms 
+
+Request: POST /esd at Tue Aug 23 2022 12:17:31 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 8.328 ms 
+
+Request: POST /esd at Tue Aug 23 2022 12:18:43 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 11.695 ms 
+
+Request: POST /esd at Tue Aug 23 2022 12:59:23 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 17.362 ms 
+
+Request: POST /esd at Tue Aug 23 2022 13:26:36 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 9.938 ms 
+
+Request: POST /esd at Tue Aug 23 2022 14:30:18 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 8.116 ms 
+
+Request: POST /esd at Tue Aug 23 2022 14:30:23 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 15.858 ms 
+
+Request: POST /esd at Tue Aug 23 2022 14:37:18 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 11.098 ms 
+
+Request: POST /esd at Tue Aug 23 2022 14:38:58 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 11.744 ms 
+
+Request: POST /esd at Tue Aug 23 2022 14:59:10 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 9.828 ms 
+
+Request: POST /esd at Tue Aug 23 2022 14:59:53 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 6.236 ms 
+
+Request: POST /esd at Tue Aug 23 2022 15:01:51 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 11.813 ms 
+
+Request: POST /esd at Tue Aug 23 2022 15:10:41 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 4.757 ms 
+
+Request: POST /esd at Tue Aug 23 2022 15:11:11 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 11.409 ms 
+
+Request: POST /esd at Tue Aug 23 2022 16:33:45 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 10.783 ms 
+
+Request: POST /esd at Tue Aug 23 2022 16:35:12 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+
+Request: POST /esd at Tue Aug 23 2022 16:35:47 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 8.903 ms 
+
+Request: POST /esd at Tue Aug 23 2022 16:37:13 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 9.684 ms 
+
+Request: POST /esd at Tue Aug 23 2022 16:38:31 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 10.297 ms 
+
+Request: POST /esd at Tue Aug 23 2022 16:44:23 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 200 8.974 ms 
+
+Request: POST /esd at Wed Aug 24 2022 10:23:16 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 500 13.879 ms 
+
+Request: POST /esd at Wed Aug 24 2022 10:24:57 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+
+Request: POST /esd at Wed Aug 24 2022 10:25:38 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 500 14.460 ms 
+
+Request: POST /esd at Wed Aug 24 2022 10:31:00 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 500 8.416 ms 
+
+Request: POST /esd at Wed Aug 24 2022 14:04:26 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 500 11.001 ms 
+
+Request: POST /esd at Wed Aug 24 2022 14:06:39 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 500 12.051 ms 
+
+Request: POST /esd at Wed Aug 24 2022 14:07:05 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 500 6.957 ms 
+
+Request: POST /esd at Wed Aug 24 2022 14:07:06 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 500 3.621 ms 
+
+Request: POST /esd at Wed Aug 24 2022 14:45:47 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 500 13.518 ms 
+
+Request: POST /esd at Wed Aug 24 2022 15:02:25 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 500 10.873 ms 
+
+Request: POST /esd at Wed Aug 24 2022 15:02:27 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 500 2.366 ms 
+
+Request: POST /esd at Wed Aug 24 2022 15:02:28 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 500 2.178 ms 
+
+Request: POST /esd at Wed Aug 24 2022 15:06:11 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 500 11.599 ms 
+
+Request: POST /esd at Wed Aug 24 2022 15:06:12 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 500 3.314 ms 
+
+Request: POST /esd at Wed Aug 24 2022 15:06:13 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 500 2.071 ms 
+
+Request: POST /esd at Wed Aug 24 2022 15:06:14 GMT+0300, IP: 127.0.0.1, User Agent: PostmanRuntime/7.29.2
+Request Body:
+{
+	"invoice_date": "05_06_2022",
+	"invoice_number": "2502202211363",
+	"invoice_pin": "P051201909L",
+	"customer_pin": "P051241778C",
+	"grand_total": "9500.00",
+	"net_subtotal": "8700.00",
+	"tax_total": "800.00",
+	"net_discount_total": "0.00",
+	"sel_currency": "KSh",
+	"rel_doc_number": "",
+	"items_list": [
+		"0001.11.00 ExpemptedItem 10.00 70.00 700.00",
+		"0009.12.00 ItemZeroRated 10.00 300.00 3000.00"
+	]
+}
+Response Body:
+{
+	"error_status": "Unknown Error, Try Again"
+}
+Response: 500 1.582 ms 

@@ -106,3 +106,8 @@ Response Body:
 	"0001.11.00 Item 1.00 1000.00 1000.00"
 ]
 Response: 200 1.736 ms 
+- 
+- 
+{"error_status":"Unknown Error, Try Again"} 
+{"error_status":"Unknown Error, Try Again"} 
+{"error_status":"Unknown Error, Try Again"} 127.0.0.1 {"request":{"invoice_date":"05_06_2022","invoice_number":"2502202211363","invoice_pin":"P051201909L","customer_pin":"P051241778C","grand_total":"9500.00","net_subtotal":"8700.00","tax_total":"800.00","net_discount_total":"0.00","sel_currency":"KSh","rel_doc_number":"","items_list":["0001.11.00 ExpemptedItem 10.00 70.00 700.00","0009.12.00 ItemZeroRated 10.00 300.00 3000.00"]}} {"response":{"statusCode":200}} POST /esd 200 10:30:15 AM
