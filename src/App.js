@@ -24,7 +24,6 @@ function App() {
     }
   })
   if (showLog) {
-    ipcRenderer.send(channels.RECEIVE_LOG, "Please");
     return (
       <BrowserRouter>
         <Routes>

@@ -9,6 +9,7 @@ const fs = require("fs");
 const { channels } = require('../src/shared/constants');
 const Store = require('electron-store');
 const storedbdata = require('../src/storedbdata');
+const { send } = require('process');
 const store = new Store();
 const fetch = require('electron-fetch').default
 const shell = require('electron').shell
@@ -80,7 +81,7 @@ app.on("before-quit", (event) => {
 
 storedbdata.findRequest().then((docs) => {
   // console.log(docs)
-  ipcMain.once(channels.RECEIVE_REQUEST_LOG, (event, arg) => {
+  ipcMain.on(channels.RECEIVE_REQUEST_LOG, (event, arg) => {
     if (arg === "OK") {
       event.sender.send(channels.RECEIVE_REQUEST_LOG, docs);
     } else {
@@ -90,8 +91,62 @@ storedbdata.findRequest().then((docs) => {
 }).catch((err) => {
   console.log(err);
 })
+ipcMain.on(channels.RECEIVE_LOG_PAGINATION, (event, arg) => {
+  // console.log(`Pagination ${arg}`);
+  storedbdata.findAllPagination(arg).then((value) => {
+    event.sender.send(channels.RECEIVE_LOG_PAGINATION, value);
+  }).catch((err) => {
+    ipcMain.removeAllListeners(channels.RECEIVE_LOG_PAGINATION);
+  });
+})
+
+ipcMain.on(channels.RECEIVE_REQUEST_PAGINATION, (event, arg) => {
+  storedbdata.findRequestPagination(arg).then((value) => {
+    event.sender.send(channels.RECEIVE_REQUEST_PAGINATION, value);
+  }).catch((err) => {
+    ipcMain.removeAllListeners(channels.RECEIVE_REQUEST_PAGINATION);
+  })
+})
+
+ipcMain.on(channels.RECEIVE_RESPONSE_PAGINATION, (event, arg) => {
+  storedbdata.findResponsePagination(arg).then((value) => {
+    event.sender.send(channels.RECEIVE_RESPONSE_PAGINATION, value);
+  }).catch((err) => {
+    ipcMain.removeAllListeners(channels.RECEIVE_RESPONSE_PAGINATION)
+  })
+});
+ipcMain.on(channels.DATE_FILTER, (event, arg) => {
+  storedbdata.filterDateAll(arg[0], arg[1]).then((value) => {
+    event.sender.send(channels.DATE_FILTER, value);
+  }).catch((err) => {
+    ipcMain.removeAllListeners(channels.DATE_FILTER)
+  })
+})
+
+ipcMain.on(channels.DATE_LOG_PAGINATION, (event, arg) => {
+  storedbdata.findDateAllPagination(arg[2], arg[0], arg[1]).then((value) => {
+    event.sender.send(channels.DATE_LOG_PAGINATION, value);
+  }).catch((err) => {
+    ipcMain.removeAllListeners(channels.DATE_LOG_PAGINATION);
+  })
+})
+ipcMain.on(channels.DATE_REQUEST_PAGINATION, (event, arg) => {
+  storedbdata.findDateAllPagination(arg[2], arg[0], arg[1]).then((value) => {
+    event.sender.send(channels.DATE_REQUEST_PAGINATION, value);
+  }).catch((err) => {
+    ipcMain.removeAllListeners(channels.DATE_REQUEST_PAGINATION);
+  })
+})
+ipcMain.on(channels.DATE_RESPONSE_PAGINATION, (event, arg) => {
+  storedbdata.findDateAllPagination(arg[2], arg[0], arg[1]).then((value) => {
+    event.sender.send(channels.DATE_RESPONSE_PAGINATION, value);
+  }).catch((err) => {
+    ipcMain.removeAllListeners(channels.DATE_RESPONSE_PAGINATION);
+  })
+})
+
 storedbdata.findResponse().then((docs) => {
-  ipcMain.once(channels.RECEIVE_RESPONSE_LOG, (event, arg) => {
+  ipcMain.on(channels.RECEIVE_RESPONSE_LOG, (event, arg) => {
     if (arg === "OK") {
       event.sender.send(channels.RECEIVE_RESPONSE_LOG, docs);
     } else {
@@ -102,8 +157,11 @@ storedbdata.findResponse().then((docs) => {
   console.error(err);
 })
 storedbdata.findAll().then((docs) => {
-  ipcMain.once(channels.RECEIVE_LOG, (event, arg) => {
-    event.sender.send(channels.RECEIVE_LOG, docs);
+  ipcMain.on(channels.RECEIVE_LOG, (event, arg) => {
+    if (arg === "Please") {
+      event.sender.send(channels.RECEIVE_LOG, docs);
+    }
+
   })
 }).catch(err => console.log(err));
 

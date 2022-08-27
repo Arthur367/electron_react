@@ -10,16 +10,12 @@ const xml2js = require('xml2js').parseString
 const fs = require('fs');
 const morgan = require('morgan')
 var rfs = require('rotating-file-stream')
-
 var log4js = require('log4js');
 const morganBody = require('morgan-body');
-
-
 const { channels } = require('../src/shared/constants');
-
-
 const path = require('path')
 const storedbdata = require('../src/storedbdata')
+const { SaveAllLogData, SaveRequestLog, SaveResponseLogData } = require('./schema')
 
 const host = "0.0.0.0"
 const port = "3500"
@@ -32,93 +28,85 @@ app.use(express.urlencoded({ extended: false }))
 
 
 //log data and  written to file here
-const log = rfs.createStream('access.log', {
-  interval: '1d', // rotate daily
-  path: path.join(__dirname, 'access')
-});
-morganBody(app, {
-  noColors: true,
-  stream: log
-});
+// const log = rfs.createStream('access.log', {
+//   interval: '1d', // rotate daily
+//   path: path.join(__dirname, 'access')
+// });
+// morganBody(app, {
+//   noColors: true,
+//   stream: log
+// });
 
-const originalSend = app.response.send
+// const originalSend = app.response.send
 
-app.response.send = function sendOverWrite(body) {
-  originalSend.call(this, body)
-  this.__custombody__ = body
-}
-morgan.token('res-body', (_req, res) =>
-  JSON.stringify(res.__custombody__),
-)
-//get the request log using moran and then saving it to local db using nedb
-morgan.token('body', function getBody(req, res) {
-  var url = req.url;
-  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  var method = req.method;
-  var date = new Date();
-  var all = {
-    "data": "all",
-    "request": {
-      "url": url,
-      "ip": ip,
-      "method": method,
-      "request_data": req.body,
-      "date": date.toLocaleDateString(),
-      "time": date.toLocaleTimeString()
-    },
-    "response": {
-      "statusCode": res.statusCode,
-      "ip": ip,
-      "date": date.toLocaleDateString,
-      "time": date.toLocaleTimeString(),
-      "data": res.__custombody__,
-    }
+// app.response.send = function sendOverWrite(body) {
+//   originalSend.call(this, body)
+//   this.__custombody__ = body
+// }
+// morgan.token('res-body', (_req, res) =>
+//   JSON.stringify(res.__custombody__),
+// )
 
-  }
-  var request = {
-    "data": "request",
-    "request": {
-      "url": url,
-      "ip": ip,
-      "method": method,
-      "request_data": req.body,
-      "date": date.toLocaleDateString(),
-      "time": date.toLocaleTimeString()
-    },
+// var date = new Date();
+// //get the request log using moran and then saving it to local db using nedb
+// morgan.token('body', function getBody(req, res) {
+//   var url = req.url;
+//   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+//   var method = req.method;
+//   var request = {
+//     "data": "request",
+//     "request": {
+//       "url": url,
+//       "ip": ip,
+//       "method": method,
+//       "request_data": req.payload,
+//       "date": date.toLocaleDateString(),
+//       "time": date.toLocaleTimeString()
+//     },
+//   }
+//   return JSON.stringify(request);
+// })
 
 
-  }
-  storedbdata.create(all);
-  storedbdata.create(request);
-  return JSON.stringify(request);
-})
+// //get the responsee log using moran and then saving it to local db using nedb
+// morgan.token("response", function getResponse(req, res) {
+//   var digits;
+//   var url = req.url;
+//   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+//   var method = req.method;
+//   if (!req._startAt || !res._startAt) {
+//     // missing request and/or response start time
+//     return
+//   }
 
+//   // time elapsed from request start
+//   var elapsed = process.hrtime(req._startAt)
 
-//get the responsee log using moran and then saving it to local db using nedb
-morgan.token("response", function getResponse(req, res) {
-  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  var date = new Date();
-  var response = {
-    "data": "response",
-    "response": { "statusCode": res.statusCode, "ip": ip, "date": date.toLocaleDateString, "time": date.toLocaleTimeString(), "data": res.__custombody__, }
+//   // cover to milliseconds
+//   var ms = (elapsed[0] * 1e3) + (elapsed[1] * 1e-6)
 
-  }
-  storedbdata.create(response);
-  return JSON.stringify(response);
-});
-morgan.token('timestamp', function getTimestamp(req) {
-  var date = new Date();
-  return date.toLocaleTimeString();
-})
-morgan.token('ip', function getIp(req) {
-  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  return ip;
-})
-var accessLogStream = rfs.createStream('access2.json', {
-  interval: '1d', // rotate daily
-  path: path.join(__dirname, 'log')
-});
-app.use(morgan(':body, :response ', { stream: accessLogStream }));
+//   // return truncated value
+//   var time = ms.toFixed(digits === undefined ? 3 : digits)
+//   var response = {
+//     "data": "response",
+//     "response": { "statusCode": res.statusCode, "ip": ip, "date": date.toLocaleDateString, "time": date.toLocaleTimeString(), "statusTime": `${time}ms`, "data": res.__custombody__, }
+
+//   }
+//   return JSON.stringify(response);
+// });
+// morgan.token('timestamp', function getTimestamp(req) {
+//   var date = new Date();
+//   return date.toLocaleTimeString();
+// })
+// morgan.token('ip', function getIp(req) {
+//   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+//   return ip;
+// })
+// var accessLogStream = rfs.createStream('access2.json', {
+//   interval: '1d', // rotate daily
+//   path: path.join(__dirname, 'log')
+// });
+// app.use(morgan(':body, :response ', { stream: accessLogStream }));
 
 
 app.get('/', (req, res) => {
@@ -126,8 +114,6 @@ app.get('/', (req, res) => {
   // ipcRenderer.send(channels.LOG_DATA, "ESD App Running");
 
   //Add this code everywhere you want to get log to be able to veiw log
-
-
 
 })
 
@@ -172,11 +158,8 @@ app.post('/esd', (req, res) => {
       responseBody = result;
       var result1 = JSON.parse(result);
       var result2 = JSON.parse(result1);
-
       res.setHeader('Content-Type', 'application/json');
       res.send(result1);
-      // store.set("log", result1);
-
       if (qr_image_path) {
         var qrcode = result2['verify_url']
         var file_name = path.join(qr_image_path, `${result2["cu_invoice_number"]}.png`);
@@ -195,62 +178,94 @@ app.post('/esd', (req, res) => {
           });
         })
       }
-
+      const request = req
+      SaveAllLogData(request, res, payload, result1);
+      SaveRequestLog(request, payload);
+      SaveResponseLogData(req, res, result1);
 
     }).catch(ex => {
-      console.log(ex)
+      console.log(ex['response'])
       if (ex['response']) {
-        let err = ex['response'];
+        let err = ex['response'].data;
         if (typeof err == 'object') {
           res.setHeader('Content-Type', 'application/json');
           res.status(500).send(err);
+          SaveAllLogData(req, res, payload, message);
+          SaveRequestLog(req, payload)
+          SaveResponseLogData(req, res, err)
         } else {
           const error_message = JSON.stringify(err.replace(/\\/g, ""));
           const message = JSON.parse(error_message);
           res.setHeader('Content-Type', 'application/json');
           res.status(500).send(message);
+          SaveAllLogData(req, res, payload, message);
+          SaveRequestLog(req, payload)
+          SaveResponseLogData(req, res, err)
           // store.set("log", message)
         }
       } else {
+
         res.setHeader('Content-Type', 'application/json');
-        res.status(500).send({ "error_status": "Unknown Error, Try Again" });
+        var message = { "error_status": "Unknown Error, Try Again" };
+        res.status(500).send(message);
+        SaveAllLogData(req, res, payload, message);
+        SaveRequestLog(req, payload)
+        SaveResponseLogData(req, res, message)
+
       }
     });
 })
 
 app.post('/device', (req, res) => {
-
+  payload = req.payload;
   const options = {
     headers: {
       'Authorization': req.headers.authorization,
       'Content-Type': 'application/json',
     }
   };
-
   axios.get(req.headers.hostname, options)
     .then((x) => {
       if (x.status == '200') {
         res.setHeader('Content-Type', 'application/json');
-        res.send({ 'status': true, 'message': 'Connected' });
+        const message = { 'status': true, 'message': 'Connected' };
+        res.send(message);
+        SaveAllLogData(req, res, payload, message);
+        SaveRequestLog(req, payload);
+        SaveResponseLogData(req, res);
       } else {
         res.setHeader('Content-Type', 'application/json');
-        res.send({ 'status': false, 'error_status': 'device not connected' });
+        const message = { 'status': false, 'error_status': 'device not connected' };
+        res.status(500).send(message);
+        SaveAllLogData(req, res, payload, message);
+        SaveRequestLog(req, payload);
+        SaveResponseLogData(req, res, message);
       }
     }).catch(ex => {
       if (ex['response']['data']) {
         let err = ex['response']['data'];
         if (typeof err == 'object') {
           res.setHeader('Content-Type', 'application/json');
-          res.send(err);
+          res.status(500).send(err);
+          SaveAllLogData(req, res, payload, err);
+          SaveRequestLog(req, payload);
+          SaveResponseLogData(req, res, err);
         } else {
           const error_message = JSON.stringify(err.replace(/\\/g, ""));
           const message = JSON.parse(error_message);
           res.setHeader('Content-Type', 'application/json');
           res.status(500).send(message);
+          SaveAllLogData(request, res, payload, message);
+          SaveRequestLog(request, payload);
+          SaveResponseLogData(req, res, message);
         }
       } else {
         res.setHeader('Content-Type', 'application/json');
-        res.status(500).send({ "error_status": "Unknown Error, Try Again" });
+        const message = { "error_status": "Unknown Error, Try Again" };
+        res.status(500).send(message);
+        SaveAllLogData(req, res, payload, message);
+        SaveRequestLog(req, payload);
+        SaveResponseLogData(req, res, message);
       }
     })
 })
@@ -264,6 +279,7 @@ app.get('/dtr', (req, res) => {
   invoice_number = req.headers.invoicenumber
   print_delay = req.headers.printdelay ? parseInt(req.headers.printdelay) : 8000
   qr_image_path = req.headers.qrimagepath
+  payload = req.payload
 
   file_path = path.join(import_location, `R_${file_name}`)
   error_file_path = path.join(error_location, `R_${file_name}`)
@@ -272,10 +288,14 @@ app.get('/dtr', (req, res) => {
     fs.readFile(file_path, 'utf-8', function (err, data) {
       if (err) {
         res.setHeader('Content-Type', 'application/json');
-        res.status(500).send({
+        const message = {
           "error_status": "Could not process invoice, check error log",
           "internal_error": String(err)
-        });
+        }
+        res.status(500).send(message);
+        SaveAllLogData(req, res, payload, message);
+        SaveRequestLog(req, payload);
+        SaveResponseLogData(req, res, message);
       } else {
 
         x = data.split(/\r?\n/)
@@ -308,13 +328,17 @@ app.get('/dtr', (req, res) => {
         }
 
         res.setHeader('Content-Type', 'application/json');
-        res.send({
+        const message = {
           "invoice_number": invoice_number,
           "cu_serial_number": cu_serial,
           "cu_invoice_number": cu_invoice,
           "verify_url": verify_url,
           "description": "Invoice Signed Success"
-        });
+        };
+        res.send(message);
+        SaveAllLogData(req, res, payload, message);
+        SaveRequestLog(req, payload);
+        SaveResponseLogData(req, res, message);
       }
     })
   }, print_delay)
@@ -410,6 +434,9 @@ app.post('/ace', (req, res) => {
 
         res.setHeader('Content-Type', 'application/json');
         res.send(result);
+        SaveAllLogData(req, res, json, result);
+        SaveRequestLog(req, json);
+        SaveResponseLogData(req, res, result);
       }
 
       if (qr_image_path) {
@@ -441,6 +468,9 @@ app.post('/ace', (req, res) => {
 
       res.setHeader('Content-Type', 'application/json');
       res.status(500).send(error);
+      SaveAllLogData(req, res, json, error);
+      SaveRequestLog(req, json);
+      SaveResponseLogData(req, res, error);
 
     });
 })
@@ -535,6 +565,9 @@ app.post('/datecs', (req, res) => {
 
         res.setHeader('Content-Type', 'application/json');
         res.send(result);
+        SaveAllLogData(req, res, json, result);
+        SaveRequestLog(req, json);
+        SaveResponseLogData(req, res, result);
       }
 
       if (qr_image_path) {
@@ -566,6 +599,9 @@ app.post('/datecs', (req, res) => {
 
       res.setHeader('Content-Type', 'application/json');
       res.status(500).send(error);
+      SaveAllLogData(req, res, json, error);
+      SaveRequestLog(req, json);
+      SaveResponseLogData(req, res, error);
 
     });
 })
@@ -663,8 +699,19 @@ app.post('/trial', (req, res) => {
       'Content-Length': JSON.stringify(payload).length
     }
   };
+  var startTime = (new Date()).getTime();
+  return new Promise((resolve, reject) => {
+    endTime = (new Date()).getTime();
+    var time = endTime - startTime;
+    resolve(res.send(item_array));
+    SaveAllLogData(req, res, payload, item_array);
+    SaveRequestLog(req, payload);
+    SaveResponseLogData(req, res, item_array, time);
 
-  res.send(item_array)
+  })
+
+
+
 
 })
 
