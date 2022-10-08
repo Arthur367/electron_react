@@ -11,12 +11,12 @@ const Store = require('electron-store');
 const storedbdata = require('../src/storedbdata');
 const { send } = require('process');
 const store = new Store();
-const fetch = require('electron-fetch').default
-const shell = require('electron').shell
-
+const { exec, spawn } = require('child_process');
+const { kill } = require('process');
 
 
 let win;
+let process;
 var isAppQuitting = false;
 function createWindow() {
   // Create the browser window.
@@ -195,6 +195,8 @@ const createTray = () => {
       label: 'Stop Server',
       enabled: false,
       click: () => {
+
+        kill(process.pid, 'SIGKILL');
         server.close(e => {
           console.log('Connection Closed', e)
           menuTemplate[1].enabled = true
@@ -268,6 +270,11 @@ const createTray = () => {
   }
 
   buildTrayMenu(menuTemplate)
+  // exec(`npm run start_process`);
+  process = spawn('npm run start_process', [], {
+    shell:
+      true
+  });
   server.listen(express.get('Port'), express.get('Host'), () => {
     menuTemplate[1].enabled = false
     menuTemplate[2].enabled = true

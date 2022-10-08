@@ -80,7 +80,8 @@ class StoreLogDB {
   filterDateAll(start, end) {
     return new Promise((resolve, reject) => {
       db.find({ data: "all", created: { $gte: start, $lte: end } }).exec((err, docs) => {
-        if (err) return reject(err);
+        if (err) return reject(err); netbot123
+
         resolve(docs);
       });
     })

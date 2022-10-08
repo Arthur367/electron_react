@@ -32,7 +32,6 @@ function MainPage() {
         "companyName": company,
         "contactPhone": phone,
         "email": email,
-        "deviceId": "",
         "userNumbers": users,
         "deviceId": deviceId
       }

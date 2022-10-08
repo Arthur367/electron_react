@@ -57,6 +57,7 @@
     "os": false
   },
   "scripts": {
+    "start_process": "node public/esd_process.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
